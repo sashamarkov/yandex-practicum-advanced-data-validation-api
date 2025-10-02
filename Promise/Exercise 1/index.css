@@ -1,0 +1,26 @@
+.container {
+    position: relative;
+    width: 80px;
+    height: 800px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  
+  .falling-div {
+    position: absolute;
+    cursor: pointer;
+    width: 80px;
+    height: 50px;
+    background-color: blue;
+    color: white;
+    font-family: monospace;
+    font-size: small;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 2s ease-in;
+  }
+  
+  .container:hover .falling-div {
+    top: 750px;
+  }

@@ -1,0 +1,123 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px; /* Set the height of the container */
+    width: 600px;
+    border: 1px solid #ccc; /* Optional for visualization */
+    /* Background gradient from daylight to night */
+    background: linear-gradient(to bottom, 
+        #87CEEB,   /* Light Sky Blue (Daylight) */
+        #1E90FF,   /* Dodger Blue */
+        #4682B4,   /* Steel Blue */
+        #2F4F4F,   /* Dark Slate Gray */
+        #191970,   /* Midnight Blue */
+        #000080,   /* Navy */
+        #000000    /* Black (Night) */
+    );
+}
+
+.square {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    border: 1px solid #000;
+}
+
+.left-line, .right-line {
+    position: absolute;
+    width: 2px;
+    background-color: white;
+}
+
+.left-line {
+    left: 20px;
+    top: 0;
+    bottom: 0;
+}
+
+.right-line {
+    right: 20px;
+    top: 0;
+    bottom: 0;
+}
+
+.mark {
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: white;
+}
+
+/* Marks for the left line (00:00 to 12:00) */
+.left-mark {
+    left: 10px;
+}
+
+/* Marks for the right line (13:00 to 23:59) */
+.right-mark {
+    right: 10px;
+}
+
+.left-clock {
+    display: block;
+    margin-top: -10px;
+    margin-left: -32px;
+}
+
+.right-clock {
+    display: block;
+    margin-top: -10px;
+    margin-left: 20px;
+}
+
+/* Add marks for each hour */
+.hour-1 { bottom: 8.33%; }
+.hour-2 { bottom: 16.66%; }
+.hour-3 { bottom: 25%; }
+.hour-4 { bottom: 33.33%; }
+.hour-5 { bottom: 41.66%; }
+.hour-6 { bottom: 50%; }
+.hour-7 { bottom: 58.33%; }
+.hour-8 { bottom: 66.66%; }
+.hour-9 { bottom: 75%; }
+.hour-10 { bottom: 83.33%; }
+.hour-11 { bottom: 91.66%; }
+.hour-12 { bottom: 99.66%; }
+
+.hour-13 { top: 8.33%; }
+.hour-14 { top: 16.66%; }
+.hour-15 { top: 25%; }
+.hour-16 { top: 33.33%; }
+.hour-17 { top: 41.66%; }
+.hour-18 { top: 50%; }
+.hour-19 { top: 58.33%; }
+.hour-20 { top: 66.66%; }
+.hour-21 { top: 75%; }
+.hour-22 { top: 83.33%; }
+.hour-23 { top: 91.66%; }
+.hour-24 { top: 99.66%; }
+
+.moving-div {
+    position: absolute;
+    width: 30px; 
+    height: 30px;
+    border-radius: 50%;
+}
+
+.standing-div {
+    position: absolute;
+    width: 30px; 
+    height: 30px;
+    border-radius: 50%;
+}
