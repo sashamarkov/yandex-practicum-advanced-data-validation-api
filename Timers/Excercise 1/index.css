@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px; /* Set the height of the container */
+    border: 1px solid #ccc; /* Optional for visualization */
+    background-color: #f4f4f9; /* Optional background */
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.brick {
+    width: 200px; /* Set the desired size of the square */
+    height: 200px; /* Keep height and width the same for a square */
+}
+
+.brick-true {
+    background-color: green;
+}
+
+.brick-false {
+    background-color: red;
+}
