@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px; /* Set the height of the container */
+    width: 600px;
+    border: 1px solid #ccc; /* Optional for visualization */
+    background-color: #f4f4f9; /* Optional background */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.wpm {
+    display: flex;
+    font-family: 'Courier New', Courier, monospace;
+}
