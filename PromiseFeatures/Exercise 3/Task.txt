@@ -1,0 +1,87 @@
+Вы создаёте робота-обзвонщика для беспроигрышной лотереи. Каждый раз робот выбирает 16 номеров и пытается дозвониться им. Кто-то не возьмёт трубку, кто-то не успеет ответить. Все эти случаи возможны, и от них зависит результат промиса, который возвращает doCall() (она уже будет реализована).
+У робота есть ограничения, всего 4 одновременных звонка. Поэтому вам нужно обрабатывать и передавать номера из списка так, чтобы линии не были заняты, а потом ждать, пока они все освободятся, независимо от результата дозвона. В этом вам поможет функция Promise.allSettled() ожидающая каждую новую группу звонков.
+Ну а саму лотерею вам поможет реализовать функция Promise.any(), всё по-честному -- кто первый ответил, тот и победил в розыгрыше. В конце останется только один конкурсант или не останется ни одного. Если кандидатов всё ещё больше чем линий - запускайте следующий этап дозвона через повторный вызов doCalls().
+
+---
+Если линия не будет занята, сразу возвращайте Promise.reject()
+Можно одновременно передавать промисы в несколько разных функций, это паттерн branching.
+Если кандидаты закончились - значит никто не выиграл, проверьте перед дозвонами
+Если остался один кандидат - он победитель, проверьте перед дозвонами
+
+---
+index.js
+
+let callLines = []
+document.querySelectorAll(".line").forEach(elem => callLines.push(elem))
+let resultLine = document.querySelector(".result")
+
+function getCandidates(count){
+    let ret = [];
+    for(let i = 0; i < count; i++){
+        let phone = "+7"
+        for (let n = 0; n < 10; n++) {
+            phone += Math.round(9 * Math.random()).toString()
+        }
+        ret.push(phone)
+    }
+    return ret
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    let doCall = (callLine, candidate) => new Promise((resolve, reject) => {
+        callLine.textContent = candidate
+        let delayTimer = setTimeout(() => {
+            clearTimeout(callTimer)
+            callLine.textContent += "❌"
+            setTimeout(() => reject(), 1000)
+        }, 5 * 1000)
+
+        let callTimer = setTimeout(() => {
+            clearTimeout(delayTimer)
+            let answer = Math.random();
+            let decline = Math.random();
+            if(answer > decline) {
+                callLine.textContent += "✔"
+                setTimeout(() => resolve(candidate), 1000)
+            } else {
+                callLine.textContent += "❌"
+                setTimeout(() => reject(), 1000)
+            }
+        }, 10 * 1000 * Math.random())
+    })
+
+    let doCalls = (candidates) => new Promise((resolve, reject) => {
+        
+        callLines.forEach(callLine => callLine.textContent = "")
+
+        if(candidates.length == 0){
+            resultLine.textContent = "Никто не победил..."
+            ??? //верните неудачный результат главного промиса
+        } else if (candidates.length == 1){
+            resultLine.textContent = `Победитель ${candidates[0]}`
+            ??? //верните номер победителя в главный промис
+        } else {
+            let callPromises = callLines.map(callLine => {
+                let nextCandidate = candidates.?? //достаньте первый номер из списка, список сократится
+                if(nextCandidate && candidates.length > 0){ //номера ещё остались
+                    return doCall(callLine, nextCandidate) // сделайте вызов 
+                } else if (nextCandidate && candidates.length == 0){ // победитель
+                    return ???(nextCandidate) //сразу верните выполненный промис
+                } else {
+                    return ???() //сразу верните отменённый промис
+                }
+            })
+            ???(callPromises).then(candidate => { //здесь надо дождаться первого кто ответит (то есть выполнит промис)
+                candidates.push(candidate)
+            }).catch(() => {
+                console.log("no candidates now")
+            })
+            ???(callPromises).then(() => { //а здесь надо дождаться выполнения  всех промисов
+                doCalls(candidates).then(resolve, reject) //это способ продолжить выполнение главного промиса в следующей итерации
+            })
+        }
+    })
+    
+    doCalls(getCandidates(16))
+})
