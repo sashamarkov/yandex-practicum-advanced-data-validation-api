@@ -1,0 +1,67 @@
+Вы разрабатываете генератор секретных кодов для шифрования документов. Для этого вы заполняете матрицу произвольными символами от 0 до 9 и от A до Z. Коды имеют геометрический смысл, поэтому генератор не всегда угадывает следующий символ.
+Ваша задача запустить генерацию в виде массива промисов и затем проанализировать все успешно завершённые промисы с помощью функции Promise.allSettled(). Функцию генератора писать не требуется, используйте промис, который она возвращает.
+Выведите в консоль секретный код и количество удачных и неудачных попыток.
+
+---
+Вызывайте функцию генератора несколько раз в цикле, не забудьте сохранить промис
+Функция Promise.allSettled() принимает именно массив промисов
+Проанализируйте результат в .then, помните про специальный формат результатов и поле .status
+
+---
+index.js
+let field = [
+    [' ', ' ', ' ', ' ', ' ', ],
+    [' ', ' ', ' ', ' ', ' ', ],
+    [' ', ' ', ' ', ' ', ' ', ],
+    [' ', ' ', ' ', ' ', ' ', ],
+    [' ', ' ', ' ', ' ', ' ', ],
+];
+
+let lines = document.querySelectorAll(".line")
+
+function drawField() {
+    lines.forEach((line, index) => {
+        let row = field[index]
+        line.textContent = row.join("\t")
+    })
+    requestAnimationFrame(() => drawField())
+}
+
+let chars = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🅰','🅱','🅲','🅳','🅴','🅵',
+    '🅶','🅷','🅸','🅹','🅺','🅻','🅼','🅽','🅾','🅿','🆀','🆁','🆂','🆃','🆄','🆅','🆆','🆇','🆈','🆉']
+
+function putRandomDot(){
+    return new Promise((resolve, reject) => {
+        let rowIdx = Math.round((field.length - 1) * Math.random());
+        let colIdx = Math.round((field[rowIdx].length - 1) * Math.random());
+        let charIdx = Math.round((chars.length - 1) * Math.random())
+        setTimeout(() => {
+            let oldChar = field[rowIdx][colIdx]
+            let newChar = chars[charIdx];
+            if(oldChar == " "){
+                field[rowIdx][colIdx] = newChar
+                resolve({newChar, rowIdx, colIdx})
+            } else if (oldChar == newChar) {
+                resolve({newChar, rowIdx, colIdx})
+            } else {
+                reject({err: `${rowIdx}:${colIdx} already taken`})
+            }
+        }, Math.random() * 5000)
+    })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    let dotPromises = ...
+    for(let i = 0; i < 128; i++){
+        putRandomDot() ???
+    }
+    ...then(dotResult => {
+        let dotRejected = dotResult.filter(dot => ???)
+        let dotResolved = dotResult.filter(dot => ???).map(dot => dot.value.newChar)
+
+        console.log(`resolved ???, rejected ???`)
+        console.log(`secret code: ${dotResolved.join('')}`)
+    })
+    
+    drawField();
+})

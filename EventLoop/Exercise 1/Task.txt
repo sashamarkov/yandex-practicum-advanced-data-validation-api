@@ -1,0 +1,51 @@
+В этом итоговом тренажёре вам нужно воспользоваться своими знаниями об event loop и асинхронном коде в целом и починить зависающий код страницы с прогресс-баром. При нажатии на кнопку СТАРТ прогресс-бар должен дойти до конца и затем код выведет alert с результатом выполнения функции startProgress(). Если в процессе работы нажата кнопка СТОП, то выводится сообщение об отмене и процесс останавливается.
+В коде допущен ряд ошибок, вам стоит взглянуть повнимательнее на саму функцию startProgress, на детали оформления таймеров, на обработку await-результатов. Функция должна возвращать промис, он завершается успешно только если прогресс-бар дошёл до 100%.
+
+---
+Циклы в коде - всегда синхронные.
+Не забывайте очищать переменные с таймерами
+Вместе с await полезен try catch finally
+
+---
+index.js
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let interval;
+    let rejectFn;
+
+    async function startProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        return new Promise((resolve, reject) => {
+            let width = 0;
+            
+            interval  = 0
+            setInterval(() => {
+                do {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        return ("ok")
+                    } else {
+                        width += Math.max(1, Math.round(3 * Math.random()));
+                        progressBar.style.width = width + '%';
+                    }
+                } while (width <= 100)
+            }, 100);
+        })
+    }
+
+    function stopProgress() {
+        clearInterval()
+        rejectFn("canceled")
+    }
+
+    document.getElementById('start-button').onclick = async () => {
+        let res
+        res = await startProgress()
+        alert(`Результат выполнения: ${res}`)
+    }
+
+    document.getElementById('stop-button').onclick = () => {
+        stopProgress()
+    }
+
+})
