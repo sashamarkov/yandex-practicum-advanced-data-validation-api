@@ -1,0 +1,20 @@
+Цитаты исполнителя Kanye West набирают популярность, поэтому вам уже нужен отдельный сервер, чтобы распространять их. Такой промежуточный сервер называется "прокси".
+Запросите цитату через прокси-сервер https://webinars.webdev.education-services.ru/train/7/2/5/kanye, затем обработайте цитату и выведите её на экран. Обратите внимание, промежуточный сервер может немного поменять формат данных.
+
+---
+Функция fetch.json() разбирает JSON из тела ответа
+Функция fetch.json() не может разобрать JSON из внутренних полей в JSON-теле ответа.
+Функция JSON.parse() разбирает JSON из любого текста
+
+---
+index.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    let container = document.querySelector(".container")
+    setInterval(async () => {
+        let quoteRes = ... // запросите данные с цитатой через промежуточный сервер 'https://webinars.webdev.education-services.ru/train/7/2/5/kanye'
+        let quoteData = //ответ будет в формате json
+        let quote = JSON.????(quoteData.data) //особенность промежуточного сервера в том, что он формирует свой ответ со строкой JSON полученной от другого сервера
+        container.textContent = //выведите исходную цитату
+    }, 5 * 1000)
+})

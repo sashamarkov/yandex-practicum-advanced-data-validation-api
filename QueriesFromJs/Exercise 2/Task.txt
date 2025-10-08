@@ -1,0 +1,26 @@
+В данном задании вы реализуете простой счётчик на сервере. Получите значение по заданной ссылке https://webinars.webdev.education-services.ru/train/7/2/3/count, выведите в лог полученные данные. Затем увеличьте его на 1 и отправьте на сервер с помощью POST-запроса на тот же https://webinars.webdev.education-services.ru/train/7/2/3/count.
+Сервер ответит на это подтверждением, так вы сможете убедиться, что сервер принял ваши данные. Выведите обновлённые данные.
+
+---
+В этом тренажёре пригодится функция .text()
+Функции fetch асинхронные, используйте await
+Метод задаётся в конфигурации запроса.
+
+---
+index.js
+
+const url = 'http://???:3000/train/7/2/3/count'
+
+let countRes = //выполнить GET запрос по URL счётчика
+let countValue = //получить тело запроса
+console.log(`GET result ${countValue}`)
+
+countValue++ //увеличим счётчик для проверки
+
+console.log(`POST update ${countValue}`)
+let updateRes = await fetch(url, {
+    ??? , //выполнить POST запрос
+    ??? //с телом countValue
+})
+let updateValue = //прочесть тело ответа
+console.log(`POST result ${updateValue}`)

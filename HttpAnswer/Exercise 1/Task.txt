@@ -1,0 +1,16 @@
+Вам необходимо реализовать генератор текста-рыбы Lorem Ipsum, такой текст будет полезен для дизайнеров и для тестировщиков. Ваш сервер уже умеет генерировать текст с помощью специальной библиотеки.
+Запросите по ссылке https://webinars.webdev.education-services.ru/train/7/2/4/lorem с помощью GET-запроса и выведите его на страницу.
+
+---
+Не забывайте про await, функции fetch() асинхронные
+Сервер генерирует произвольный текст при каждом запросе.
+Для этой задачи достаточно текстового формата.
+
+---
+index.js
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let textElem = document.querySelector(".text-place")
+    let textData = await ... "https://webinars.webdev.education-services.ru/train/7/2/4/lorem" //запрос генератора текстов
+    textElem.textContent = await ... //вывести текст для пользователя
+})

@@ -1,0 +1,19 @@
+Вам нужно вывести список пользователей и их email-адреса, данные о пользователях отправит сервер по запросу к ресурсу https://webinars.webdev.education-services.ru/train/7/2/4/users. В результате вы получите JSON с полной информацией о пользователе, поэтому для вывода в нужном формате вам потребуется преобразовать данные с помощью функции .map().
+
+---
+Функция .json() асинхронная, используйте промисы или await
+В полученных объектах будут поля username и email
+Соедините список пользователей с помощью символа \n
+
+---
+index.js
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let usersElem = document.querySelector('.json-place')
+    let userRes = ... //получить данные о пользователях по ссылке "https://webinars.webdev.education-services.ru/train/7/2/4/users"
+
+    let userNames = Array.from(???) //преобразование в json
+        .map(user => ...) //выбрать только данные username <email>
+        .join("\n")
+    usersElem.textContent = userNames
+})

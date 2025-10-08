@@ -1,0 +1,37 @@
+Сервис цитат популярного эстрадного исполнителя Канье Уэста развивается. Теперь мало просто показывать цитаты, нужно собрать оценки от пользователей. Увидев цитату, они могут нажать 👍 или 👎. Данную оценку вместе с текущей цитатой нужно отправить серверу с помощью метода POST и fetch.
+Для отправки данных на сервер в функции sendThumb() используйте формат JSON.
+
+---
+Подскажите серверу тип содержимого с помощью заголовка Content-Type
+Не забудьте преобразовать JSON в строку перед отправкой
+Сервер подтвердит получение оценки, проверьте это в консоли
+
+---
+index.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    let container = document.querySelector(".container-quote")
+    let thumbUp = document.querySelector(".thumb-up")
+    let thumbDown = document.querySelector(".thumb-down")
+
+    let sendThumb = async (quote, reaction) => {
+        let reactRes = await fetch('https://webinars.webdev.education-services.ru/train/7/2/5/kanye', {
+            method: ... , //используйте метод для отправки данных
+            headers: {
+                'Content-Type': ... //используйте тип MIME, соответствующий формату JSON
+            },
+            body: ...({ quote, reaction }) //отправьте объект с оценкой
+        })
+        console.dir(await reactRes.json()) //выводим результат, в нём сервер подтвердит оценку
+    }
+
+    thumbUp.onclick = async () => await sendThumb(container.textContent, 1)
+    thumbDown.onclick = async () => await sendThumb(container.textContent, -1)
+
+    setInterval(async () => {
+        let quoteRes = await fetch('https://webinars.webdev.education-services.ru/train/7/2/5/kanye');
+        let quoteData = await quoteRes.json();
+        let quote = JSON.parse(quoteData.data)
+        container.textContent = quote.quote
+    }, 5 * 1000)
+})

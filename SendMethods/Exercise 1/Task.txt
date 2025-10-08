@@ -1,0 +1,34 @@
+Потренируйтесь в отправке файлов на сервер с помощью fetch(). Мы подготовили страницу с формой для загрузки файла. Получив в обработчике переменную files, добавьте её содержимое в форму и отправьте затем этот файл на сервер по ссылке https://webinars.webdev.education-services.ru/train/7/2/7/upload. В ответ сервер отправит информацию о файле, который вы только что прислали.
+
+---
+Пoдходящий метод для отправки - POST
+fetch сам понимает, какой формат вы хотите отправить
+
+---
+index.js
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let fileToSend = document.querySelector("#file-to-send")
+    document.querySelector("#send-button").onclick = () => fileToSend.click();
+
+    fileToSend.onchange = async (event) => {
+        let files = event.target.files
+        if(files.length == 0){
+            return;
+        }
+        let formData = ??? //новая форма для отправки
+        formData.???('comment', 'Send some files'); //добавим комментарий к файлу на форме
+        formData.???('file', files[0]); //добавим файл к форме
+        try {
+            let sendRes = await fetch('https://webinars.webdev.education-services.ru/train/7/2/7/upload', {
+                method: ???, //примените нужный метод для отправки файла
+                body: ??? // задайте поле для отправки
+            })
+            if(sendRes.ok){
+                alert("Файл отправлен")
+            }
+        } catch (e) {
+            console.error("Ошибка загрузки файла", e)
+        }
+    }
+})

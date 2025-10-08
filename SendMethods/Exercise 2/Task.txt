@@ -1,0 +1,33 @@
+Вам необходимо создать сервис регистрации пользователей. Они должны заполнить форму с ФИО, а вы затем отправить её с помощью fetch() на специальный ресурс проверки регистрации.
+Две особенности: вам необходимо использовать GET-запрос и затем нужно использовать промис, который вернёт fetch() (то есть в этом тренажёре нужно обойтись без async/await).
+Сконвертируйте полученные данные формы в URLSearchParams и соедините с основной ссылкой.
+
+---
+Метод POST не подойдёт для этого задания
+fetch() возвращает промис, а также .json() возвращает промис, воспользуйтесь этим
+Сервер вернёт JSON с теми данными формы, которые вы отправили
+
+---
+index.js
+
+document.addEventListener('DOMContentLoaded', async () => {
+    document.getElementById('fioForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Отключаем стандартную отправку формы
+
+        const formData = new FormData(event.target);
+        const params = new URLSearchParams();
+
+        for (const [key, value] of formData) {
+            //добавьте в params ключ и значение с формы
+        }
+
+        const url = 'https://webinars.webdev.education-services.ru/train/7/2/7/submit'
+        url =  url и params.toString(); //присоединяем параметры к основной ссылке
+        console.log(url);
+
+        fetch ???
+            .then(response => response.???) //получить ответный JSON
+            .then(data => console.log(data)) //выводим его в консоль
+            .catch(error => console.error('Error:', error)); //если что-то случилось, выводим ошибку
+    })
+})
