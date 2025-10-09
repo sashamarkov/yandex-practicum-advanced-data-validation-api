@@ -1,0 +1,140 @@
+Добавьте возможность редактирования существующих задач. При клике на задачу должно открываться модальное окно с формой, заполненной текущими данными. После того, как внесёте изменения и сохраните их, обновите задачу на сервере и в интерфейсе.
+Используйте PUT запрос к /api/tasks/:id для обновления данных и замените элемент в списке без перезагрузки страницы.
+
+---
+Добавьте обработчик клика на элементы задач
+Перед открытием модального окна заполните форму текущими данными задачи
+Измените заголовок модального окна и текст кнопки в режиме редактирования
+Отправляйте PUT запрос с ID задачи в URL
+После успешного обновления найдите и замените существующий элемент в списке
+
+---
+index.js
+
+import { updateTask, createTask } from "./api.js";
+import {
+  clearContainer,
+  closeModalWindow,
+  hideError,
+  hideLoader,
+  initializeDashboard,
+  openModal,
+  showError,
+  showLoader,
+} from "./utils.js";
+
+const tasksList = document.querySelector("#tasksList");
+const taskTemplate = document.querySelector("#taskTemplate");
+const taskIdInput = document.querySelector("#taskId");
+
+let loadedTasks = [];
+
+export function renderTasks(tasks) {
+  loadedTasks = tasks;
+  clearContainer(tasksList);
+  tasks.forEach((task) => {
+    const taskElement = createTaskElement(task);
+    tasksList.appendChild(taskElement);
+  });
+}
+
+export function createTaskElement(taskData) {
+  const taskElement = taskTemplate.content.cloneNode(true);
+  const taskItem = taskElement.querySelector(".task-item");
+
+  taskItem.setAttribute("data-task-id", taskData.id);
+
+  taskItem.querySelector(".task-title").textContent = taskData.title;
+  taskItem.querySelector(
+    ".task-priority"
+  ).textContent = `Приоритет: ${taskData.priority}`;
+  taskItem.querySelector(".task-deadline").textContent = `Дедлайн: ${new Date(
+    taskData.deadline
+  ).toLocaleDateString()}`;
+
+  // Добавление обработчика клика на задачу - нужно реализовать!
+  // При клике должна открываться модалка для редактирования
+
+  return taskItem;
+}
+
+function replaceTaskInList(taskData) {
+  const existingTaskElement = tasksList.querySelector(
+    `[data-task-id="${taskData.id}"]`
+  );
+
+  if (existingTaskElement) {
+    const newTaskElement = createTaskElement(taskData);
+    existingTaskElement.replaceWith(newTaskElement);
+
+    const taskIndex = loadedTasks.findIndex((t) => t.id == taskData.id);
+    if (taskIndex !== -1) {
+      loadedTasks[taskIndex] = taskData;
+
+      taskIdInput.value = null;
+    }
+  }
+}
+
+// Функция открытия модального окна для редактирования - нужно реализовать!
+function openEditModal(task) {
+  // Заполнить форму данными задачи
+  // Изменить заголовок модального окна на "Редактировать задачу"
+  // Изменить текст кнопки на "Сохранить изменения"
+  // Сохранить ID задачи в скрытое поле
+  // Открыть модальное окно
+}
+
+async function handleTaskSubmit(event) {
+  event.preventDefault();
+
+  showLoader();
+  hideError();
+
+  const formData = new FormData(taskForm);
+  const taskData = {
+    title: formData.get("title"),
+    deadline: formData.get("deadline"),
+    priority: formData.get("priority"),
+    id: Number(formData.get("id")),
+  };
+
+  try {
+    const taskId = Number(taskIdInput.value);
+
+    if (taskId) {
+      // Режим редактирования - нужно реализовать!
+      // Вызвать updateTask с taskId и taskData
+      // Найти существующий элемент в списке и заменить его
+    } else {
+      // Режим создания
+      const newTask = await createTask(taskData);
+
+      const newTaskElement = createTaskElement(taskData);
+      tasksList.appendChild(newTaskElement);
+
+      closeModalWindow();
+
+      console.log("Задача успешно создана:", newTask);
+    }
+  } catch (err) {
+    showError(err.message);
+    console.error("Ошибка создания задачи:", err);
+  } finally {
+    hideLoader();
+  }
+}
+
+refreshButton.addEventListener("click", initializeDashboard);
+addTaskButton.addEventListener("click", openModal);
+closeModal.addEventListener("click", closeModalWindow);
+cancelButton.addEventListener("click", closeModalWindow);
+taskForm.addEventListener("submit", handleTaskSubmit);
+
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    closeModalWindow();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", initializeDashboard);

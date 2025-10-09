@@ -1,0 +1,47 @@
+Создайте дашборд, который загружает данные из трёх источников: пользователи, задачи и уведомления. У вас есть готовые API-функции и рендер-функции. Нужно создать функцию initializeDashboard(), которая загрузит все данные параллельно и отобразит их в интерфейсе.
+Используйте Promise.allSettled() для одновременной загрузки всех данных. Обработайте ошибки так, чтобы если один запрос упал, то остальные данные всё равно отображались.
+
+---
+Используйте Promise.allSettled() для параллельной загрузки данных
+Для обработки выполненных и ошибочных запросов используйте свойство status ответа.
+Показывайте индикатор загрузки перед запросами и скрывайте после
+Вызывайте рендер-функции только после успешного получения данных
+
+---
+index.js
+
+import { fetchUsers, fetchTasks, fetchNews } from "./api.js";
+import {
+  renderUsers,
+  renderTasks,
+  renderNews,
+  showLoader,
+  hideLoader,
+  showError,
+  hideError,
+} from "./utils.js";
+
+const refreshButton = document.querySelector("#refreshButton");
+
+// Функция инициализации дашборда - нужно реализовать!
+async function initializeDashboard() {
+  // Показать индикатор загрузки
+
+  // Скрыть ошибки
+
+  try {
+    // Загрузить все данные параллельно с помощью Promise.allSettled()
+    // Вызвать соответствующие рендер-функции для полученных данных (лежат в res.value.data)
+
+    console.log("Дашборд инициализирован успешно");
+  } catch (err) {
+    // Показать ошибку пользователю
+
+    console.error("Ошибка инициализации:", err);
+  } finally {
+    // Скрыть индикатор загрузки
+  }
+}
+
+refreshButton.addEventListener("click", initializeDashboard);
+document.addEventListener("DOMContentLoaded", initializeDashboard);

@@ -1,0 +1,72 @@
+Расширьте дашборд функцией добавления новых задач. При нажатии на кнопку «Добавить задачу» должно открываться модальное окно с формой. После успешного создания задачи на сервере, добавьте её в конец списка без перезагрузки страницы.
+Используйте POST запрос к /api/tasks и обновите интерфейс только после подтверждения сервера.
+
+---
+Используйте событие submit формы для отправки данных
+Примените event.preventDefault(), чтобы предотвратить перезагрузку страницы
+Отправляйте данные в формате JSON через fetch с методом POST
+После успешного ответа добавьте новую задачу в список с помощью готовой функции renderTask
+Показывайте индикатор загрузки и обрабатывайте ошибки
+
+---
+index.js
+import { createTask } from "./api.js";
+import {
+  renderTask,
+  showLoader,
+  hideLoader,
+  showError,
+  hideError,
+  openModal,
+  closeModalWindow,
+  initializeDashboard,
+} from "./utils.js";
+
+const refreshButton = document.querySelector("#refreshButton");
+const addTaskButton = document.querySelector("#addTaskButton");
+const closeModal = document.querySelector("#closeModal");
+const cancelButton = document.querySelector("#cancelButton");
+const taskForm = document.querySelector("#taskForm");
+const modal = document.querySelector("#modal");
+
+// Обработчик отправки формы - нужно реализовать!
+async function handleTaskSubmit(event) {
+  // Предотвратить стандартное поведение формы
+
+  // Показать индикатор загрузки
+
+  // Скрыть ошибки
+
+  const formData = new FormData(taskForm);
+
+  try {
+    // Создать задачу через API, передав formData
+
+    // Добавить новую задачу в список, передав formData
+
+    // Закрыть модальное окно
+
+    console.log("Задача успешно создана");
+  } catch (err) {
+    // Показать ошибку
+
+    console.error("Ошибка создания задачи:", err);
+  } finally {
+    // Скрыть индикатор загрузки
+  }
+}
+
+refreshButton.addEventListener("click", initializeDashboard);
+addTaskButton.addEventListener("click", openModal);
+closeModal.addEventListener("click", closeModalWindow);
+cancelButton.addEventListener("click", closeModalWindow);
+taskForm.addEventListener("submit", handleTaskSubmit);
+
+// Закрытие модального окна по клику на фон
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    closeModalWindow();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", initializeDashboard);

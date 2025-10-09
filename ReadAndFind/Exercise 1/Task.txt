@@ -1,0 +1,38 @@
+Реализуйте клиентскую фильтрацию пользователей по имени в реальном времени.
+Задача: реализовать в index.js функцию filterUsers(query)
+Доступные функции
+getAllUsers() — получить массив всех загруженных пользователей
+renderUsers(users)
+отрисовать массив пользователей на странице
+
+---
+Используйте getAllUsers() для получения данных
+Проверьте, не пустая ли строка поиска с query.trim()
+Фильтруйте с помощью filter() и includes()
+Используйте toLowerCase() для регистронезависимого поиска
+Отрисуйте результат через renderUsers()
+
+---
+index.js
+
+import { renderUsers, initializeApp, getAllUsers } from "./utils.js";
+
+const searchInput = document.querySelector("#searchInput");
+const refreshButton = document.querySelector("#refreshButton");
+
+// Функция фильтрации пользователей - нужно реализовать!
+function filterUsers(query) {
+  // Получить всех пользователей через getAllUsers()
+  // Если поиск пустой, показать всех пользователей
+  // Отфильтровать пользователей по имени (игнорируя регистр)
+  // Отрисовать отфильтрованных пользователей
+}
+
+searchInput.addEventListener("input", (event) => {
+  const query = event.target.value;
+  filterUsers(query);
+});
+
+refreshButton.addEventListener("click", initializeApp);
+
+initializeApp();
