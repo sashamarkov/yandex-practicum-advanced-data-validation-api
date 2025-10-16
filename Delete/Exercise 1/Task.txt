@@ -1,0 +1,86 @@
+Реализуйте функции модального окна для безопасного удаления пользователей.
+Задача: реализовать в index.js:
+showDeleteModal(userId, userName)
+показ модального окна
+hideDeleteModal()
+скрытие модального окна
+Обработчик события confirmDelete
+удаление пользователя
+Доступные функции
+deleteUser(userId)
+API удаления пользователя
+updateUsersAfterDelete(userId)
+обновление списка после удаления
+showError(message)
+показ ошибки
+
+---
+Функция showDeleteModal(userId, userName):
+Сохранить userId в userIdToDelete
+Установить имя пользователя в userNameToDelete.textContent
+Добавить класс show к модальному окну
+Функция hideDeleteModal():
+Убрать класс show у модального окна
+Сбросить userIdToDelete = null
+Обработчик удаления:
+Проверить наличие userIdToDelete
+Вызвать deleteUser(userIdToDelete)
+При успехе: вызвать updateUsersAfterDelete() и закрыть модальное окно
+При ошибке: показать ошибку через showError()
+
+---
+index.js
+
+import { deleteUser } from "./api.js";
+import { initializeApp, showError, updateUsersAfterDelete } from "./utils.js";
+
+const refreshButton = document.querySelector("#refreshButton");
+
+const deleteModal = document.querySelector("#deleteModal");
+const closeModal = document.querySelector("#closeModal");
+const cancelDelete = document.querySelector("#cancelDelete");
+const confirmDelete = document.querySelector("#confirmDelete");
+const userNameToDelete = document.querySelector("#userNameToDelete");
+
+let userIdToDelete = null; // ID пользователя для удаления
+
+// Функции модального окна
+// Функции модального окна - нужно реализовать!
+export function showDeleteModal(userId, userName) {
+  // Сохранить ID пользователя для удаления
+  // Показать имя пользователя в модальном окне
+  // Открыть модальное окно
+}
+
+function hideDeleteModal() {
+  // Закрыть модальное окно
+  // Сбросить ID пользователя для удаления
+}
+
+// Обработчик подтверждения удаления - нужно реализовать!
+confirmDelete.addEventListener("click", async () => {
+  // Проверить, что есть пользователь для удаления
+  // Попробовать удалить пользователя через API
+  // В случае успеха - обновить список пользователей
+  // Закрыть модальное окно
+  // Обработать ошибки
+});
+
+closeModal.addEventListener("click", hideDeleteModal);
+cancelDelete.addEventListener("click", hideDeleteModal);
+
+deleteModal.addEventListener("click", (event) => {
+  if (event.target === deleteModal) {
+    hideDeleteModal();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && deleteModal.classList.contains("show")) {
+    hideDeleteModal();
+  }
+});
+
+refreshButton.addEventListener("click", initializeApp);
+
+initializeApp();

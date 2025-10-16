@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пагинация пользователей</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Список пользователей</h1>
+
+      <div id="loader" class="loader">Загрузка пользователей...</div>
+      <div id="error" class="error"></div>
+
+      <!-- Информация о пагинации -->
+      <div id="paginationInfo" class="pagination-info">
+        <span id="usersCount"></span>
+      </div>
+
+      <!-- Список пользователей -->
+      <div class="users-section">
+        <ul id="usersList" class="users-list"></ul>
+      </div>
+
+      <!-- Навигация по страницам -->
+      <div id="pagination" class="pagination"></div>
+
+      <button id="refreshButton" class="refresh-button">Обновить список</button>
+    </div>
+
+    <!-- Template для пользователя -->
+    <template id="userTemplate">
+      <li class="user-card">
+        <div class="user-info">
+          <h3 class="user-name"></h3>
+          <p class="user-email"></p>
+          <small class="user-date"></small>
+        </div>
+      </li>
+    </template>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

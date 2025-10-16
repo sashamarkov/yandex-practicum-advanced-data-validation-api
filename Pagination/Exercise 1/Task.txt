@@ -1,0 +1,69 @@
+Реализуйте интерфейс с пагинацией для отображения списка пользователей. Данные должны загружаться с сервера постранично, с возможностью переключения между страницами.
+Используйте API GET /api/users/pagination?limit=6&page=X для получения данных. Реализуйте навигацию по страницам с кнопками «Предыдущая», номерами страниц и «Следующая».
+
+---
+Используйте query параметры limit и page для запроса нужной страницы
+Сервер возвращает данные в формате {data: [...], pagination: {...}}
+Отображайте информацию о текущей странице и общем количестве
+Реализуйте переключение страниц без перезагрузки
+Показывайте состояние загрузки при переключении страниц
+Обрабатывайте ошибки загрузки данных
+API Response
+
+{
+  "success": true,
+  "data": [...],
+  "pagination": {
+    "currentPage": 2,
+    "totalPages": 5,
+    "totalUsers": 30,
+    "limit": 6,
+    "hasNextPage": true,
+    "hasPrevPage": true,
+    "nextPage": 3,
+    "prevPage": 1
+  }
+}
+
+---
+index.js
+
+import { fetchUsersPage } from "./api.js";
+import {
+  renderUsers,
+  renderPaginationInfo,
+  renderPagination,
+  hideLoader,
+  showLoader,
+  showError,
+} from "./utils.js";
+
+const refreshButton = document.querySelector("#refreshButton");
+
+const ITEMS_PER_PAGE = 6;
+let currentPage = 1;
+let totalPages = 1;
+let totalUsers = 0;
+
+// Функция загрузки страницы - нужно реализовать!
+async function loadPage(page) {
+  // Показать загрузчик
+  // Загрузить данные с сервера
+  // Обновить глобальные переменные (currentPage, totalPages, totalUsers)
+  // Отрисовать пользователей
+  // Отрисовать информацию о пагинации
+  // Отрисовать навигацию
+  // Скрыть загрузчик
+  // Обработать ошибки
+}
+
+// Функция инициализации
+async function initializeApp() {
+  await loadPage(1);
+}
+
+refreshButton.addEventListener("click", () => {
+  loadPage(currentPage);
+});
+
+initializeApp();
